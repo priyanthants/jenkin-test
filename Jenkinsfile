@@ -1,24 +1,8 @@
-pipeline {
-    agent any
-
-    stages {
-        stage('Install') {
-            steps {
-                echo 'Installing..'
-                npm i
-            }
-        }
-        stage('Build') {
-            steps {
-                echo 'Building..'
-                npm run build
-            }
-        }
-        stage('Deploy') {
-            steps {
-                echo 'Deploying....'
-                npm run start
-            }
+node('docker') {
+    checkout scm
+    stage('Build') {
+        docker.image('node:10.15.0').inside {
+            sh 'npm --version'
         }
     }
 }
