@@ -1,8 +1,15 @@
-node('docker') {
-    checkout scm
-    stage('Build') {
-        docker.image('node:10.15.0').inside {
-            sh 'npm --version'
+pipeline {
+    agent {
+        docker {
+            image 'node:6-alpine' 
+            args '-p 3000:3000' 
+        }
+    }
+    stages {
+        stage('Build') { 
+            steps {
+                sh 'npm install' 
+            }
         }
     }
 }
